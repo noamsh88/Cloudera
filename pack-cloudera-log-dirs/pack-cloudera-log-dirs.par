@@ -1,0 +1,13 @@
+#!/bin/bash
+export HDFS_LOGDIRS="/var/log/hadoop-hdfs /var/log/hadoop-httpfs"
+export HIVE_LOGDIRS="/var/log/hive /var/log/hive/operation_logs /var/log/hcatalog"
+export HUE_LOGDIRS="/var/log/hue"
+export IMPALA_LOGDIRS="/var/log/catalogd /var/log/impala-minidumps /var/log/impalad /var/log/impala-llama /var/log/statestore"
+export OOZIE_LOGDIRS="/var/log/oozie"
+export SPARK_LOGDIRS="/var/log/spark"
+export YARN_LOGDIRS="/var/log/hadoop-yarn"
+export KAFKA_LOGDIRS="/var/log/kafka /var/log/hadoop-mapreduce"
+export ZOOKEEPER_LOGDIRS="/var/log/zookeeper"
+export CLOUDERA_LOGDIRS="/var/log/cloudera-scm-server /var/log/cloudera-scm-agent /var/log/cloudera-scm-firehose /var/log/cloudera-scm-alertpublisher /var/log/cloudera-scm-eventserver"
+export ALL_LOGDIRS=${HDFS_LOGDIRS}" "${HIVE_LOGDIRS}" "${HUE_LOGDIRS}" "${IMPALA_LOGDIRS}" "${KAFKA_LOGDIRS}" "${OOZIE_LOGDIRS}" "${SPARK_LOGDIRS}" "${YARN_LOGDIRS}" "${KAFKA_LOGDIRS}" "${ZOOKEEPER_LOGDIRS}" "${CLOUDERA_LOGDIRS}
+export SERVICE_LIST="hdfs hive hue impala kafka oozie spark yarn kafka zookeeper cloudera"
