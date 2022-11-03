@@ -1,0 +1,57 @@
+#!/usr/local/bin/perl
+
+use Getopt::Long;
+
+####################################################################
+## Show usage.                                                    ##
+####################################################################
+
+sub show_usage() {
+print "Usage:\n SendHtmlMail  -to <email address:devops\@company.com > -from  <email address:devops\@company.com > -subject <email subject> -htmlfile </tmp/file.html>\n\n";
+print 'Example: SendHtmlMail -to devops\@company.com -from devops\@company.com  -subject "DevOps Report" -htmlfile /tmp/file.html';
+print "\n\n";
+ exit 1;
+}
+
+####################################################################
+## Check input command line arguments.                            ##
+####################################################################
+sub analyze_cmdline() {
+  if (!GetOptions(
+             "to=s",         \$ToMail,
+             "from=s",           \$FromMail,
+             "Subject=s",    \$SubjectMail,
+             "htmlfile=s",   \$HtmlFile,
+            )) { return 0; }
+
+ &show_usage if !$ToMail or !$FromMail or !$SubjectMail or !$HtmlFile ;
+ print "ToMail=$ToMail  FromMail=$FromMail SubjectMail=$SubjectMail  HtmlFile=$HtmlFile \n";
+ if ( ! -e $HtmlFile) {
+    die "ERROR: The file $HtmlFile not exist";
+ }
+
+return 1;
+}
+
+
+analyze_cmdline();
+
+
+$sendmailpath="/usr/sbin/sendmail";
+open (MAIL, "| $sendmailpath -t");
+print MAIL "Content-Type: text\/html;\n";
+print MAIL "To: $ToMail\n";
+print MAIL "From: $FromMail\n";
+print MAIL "Subject: $SubjectMail\n\n";
+
+open (MyFile, $HtmlFile);
+   while ($record = <MyFile>) {
+#     print $record;
+   $str=$str . $record;
+   }
+
+close(MyFile);
+print MAIL $str;
+close MAIL;
+
+exit;
